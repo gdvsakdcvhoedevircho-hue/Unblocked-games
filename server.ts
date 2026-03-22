@@ -21,6 +21,11 @@ async function startServer() {
       server: { middlewareMode: true },
       appType: 'spa',
     });
+    console.log('Vite middleware initialized');
+    app.use((req, res, next) => {
+      console.log(`Incoming request: ${req.url}`);
+      next();
+    });
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
