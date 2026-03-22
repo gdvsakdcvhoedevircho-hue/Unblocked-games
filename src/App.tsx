@@ -5,17 +5,28 @@ import gamesData from './games.json';
 import { Game } from './types';
 
 export default function App() {
+  console.log('App component rendering');
   const [games, setGames] = useState<Game[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
 
   useEffect(() => {
-    setGames(gamesData as Game[]);
+    console.log('App mounted, loading games data:', gamesData);
+    const data = Array.isArray(gamesData) ? gamesData : (gamesData as any).default || [];
+    setGames(data as Game[]);
   }, []);
 
   const filteredGames = games.filter((game: Game) =>
     game.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  if (!gamesData) {
+    return (
+      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
+        <p>Error: Games data not found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-emerald-500/30">
