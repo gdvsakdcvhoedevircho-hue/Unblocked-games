@@ -2,17 +2,18 @@ import { useState, useEffect } from 'react';
 import { Gamepad2, Search, Maximize2, ChevronLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import gamesData from './games.json';
+import { Game } from './types';
 
 export default function App() {
-  const [games, setGames] = useState([]);
+  const [games, setGames] = useState<Game[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedGame, setSelectedGame] = useState(null);
+  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
 
   useEffect(() => {
-    setGames(gamesData);
+    setGames(gamesData as Game[]);
   }, []);
 
-  const filteredGames = games.filter(game =>
+  const filteredGames = games.filter((game: Game) =>
     game.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -36,7 +37,7 @@ export default function App() {
               type="text"
               placeholder="Search games..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
               className="w-full bg-zinc-900 border border-zinc-800 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all text-sm"
             />
           </div>
@@ -57,7 +58,7 @@ export default function App() {
               exit={{ opacity: 0, y: -20 }}
               className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
             >
-              {filteredGames.map((game) => (
+              {filteredGames.map((game: Game) => (
                 <motion.div
                   key={game.id}
                   layoutId={game.id}
@@ -107,8 +108,8 @@ export default function App() {
                   <h2 className="text-xl font-bold">{selectedGame.title}</h2>
                   <button 
                     onClick={() => {
-                      const iframe = document.getElementById('game-iframe');
-                      if (iframe.requestFullscreen) iframe.requestFullscreen();
+                      const iframe = document.getElementById('game-iframe') as HTMLIFrameElement | null;
+                      if (iframe && iframe.requestFullscreen) iframe.requestFullscreen();
                     }}
                     className="p-2 hover:bg-zinc-800 rounded-lg transition-colors text-zinc-400 hover:text-white"
                     title="Fullscreen"
