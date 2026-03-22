@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Gamepad2, Search, X, Maximize2, ChevronLeft, ExternalLink } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import gamesData from './games.json';
 import { Game } from './types';
 
@@ -8,6 +8,7 @@ export default function App() {
   const [games, setGames] = useState<Game[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -17,9 +18,13 @@ export default function App() {
     setIsLoaded(true);
   }, []);
 
-  const filteredGames = games.filter((game) =>
-    game.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const categories = ['All', ...new Set(games.map(game => game.category))];
+
+  const filteredGames = games.filter((game) => {
+    const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === 'All' || game.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-emerald-500/30">
@@ -43,6 +48,23 @@ export default function App() {
               className="w-full bg-zinc-900 border border-zinc-800 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-sm"
             />
           </div>
+        </div>
+
+        {/* Category Filters */}
+        <div className="max-w-7xl mx-auto mt-6 flex flex-wrap gap-2">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+                selectedCategory === category
+                  ? 'bg-emerald-500 text-zinc-950'
+                  : 'bg-zinc-900 text-zinc-400 border border-zinc-800 hover:border-zinc-700'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
         </div>
       </nav>
 
@@ -86,9 +108,16 @@ export default function App() {
                   />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-lg group-hover:text-emerald-400 transition-colors">{game.title}</h3>
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="font-bold text-lg group-hover:text-emerald-400 transition-colors">{game.title}</h3>
+                    {game.isFeatured && (
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 bg-emerald-500 text-zinc-950 rounded uppercase tracking-wider">
+                        Featured
+                      </span>
+                    )}
+                  </div>
                   <div className="mt-2 flex items-center gap-2">
-                    <span className="text-xs font-medium px-2 py-1 bg-zinc-800 rounded-md text-zinc-400">Action</span>
+                    <span className="text-xs font-medium px-2 py-1 bg-zinc-800 rounded-md text-zinc-400">{game.category}</span>
                     <span className="text-xs font-medium px-2 py-1 bg-zinc-800 rounded-md text-zinc-400">Web</span>
                   </div>
                 </div>

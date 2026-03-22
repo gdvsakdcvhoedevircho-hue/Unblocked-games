@@ -3,36 +3,44 @@
     "id": "2048",
     "title": "2048",
     "thumbnail": "https://picsum.photos/seed/2048/400/300",
-    "iframeUrl": "https://play2048.co/"
+    "iframeUrl": "https://play2048.co/",
+    "category": "Puzzle",
+    "isFeatured": true
   },
   {
     "id": "tetris",
     "title": "Tetris (Classic)",
     "thumbnail": "https://picsum.photos/seed/tetris/400/300",
-    "iframeUrl": "https://tetris.com/play-tetris"
+    "iframeUrl": "https://tetris.com/play-tetris",
+    "category": "Puzzle"
   },
   {
     "id": "snake",
     "title": "Google Snake",
     "thumbnail": "https://picsum.photos/seed/snake/400/300",
-    "iframeUrl": "https://www.google.com/logos/2010/pacman10-i.html"
+    "iframeUrl": "https://www.google.com/logos/2010/pacman10-i.html",
+    "category": "Arcade"
   },
   {
     "id": "flappy-bird",
     "title": "Flappy Bird Clone",
     "thumbnail": "https://picsum.photos/seed/bird/400/300",
-    "iframeUrl": "https://flappybird.io/"
+    "iframeUrl": "https://flappybird.io/",
+    "category": "Arcade",
+    "isFeatured": true
   },
   {
     "id": "slope",
     "title": "Slope",
     "thumbnail": "https://picsum.photos/seed/slope/400/300",
-    "iframeUrl": "https://slope-game.github.io/"
+    "iframeUrl": "https://slope-game.github.io/",
+    "category": "Action"
   },
   {
     "id": "crossy-road",
     "title": "Crossy Road",
     "thumbnail": "https://picsum.photos/seed/crossy/400/300",
-    "iframeUrl": "https://poki.com/en/g/crossy-road"
+    "iframeUrl": "https://poki.com/en/g/crossy-road",
+    "category": "Action"
   }
 ]

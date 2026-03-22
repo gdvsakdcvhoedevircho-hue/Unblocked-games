@@ -3,4 +3,6 @@ export interface Game {
   title: string;
   thumbnail: string;
   iframeUrl: string;
+  category: string;
+  isFeatured?: boolean;
 }
